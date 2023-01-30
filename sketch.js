@@ -175,13 +175,9 @@ function noColorFade() {
 
 //----------------------------------------mousePressed
 function mousePressed() {
-  imageMode(CENTER);
-  logo.resize(40, 0);
-  tint(255, 255, 255);
-  image(logo, xLogo, windowHeight-20);
-  
-  imageMode(CORNER);
-  save();
+  reloadPage();
+    let fs = fullscreen();
+    fullscreen(!fs);   
   
   // clear(); 
 }
@@ -189,9 +185,13 @@ function mousePressed() {
 //--------------------------------space bar
 function keyPressed() {
    if (keyCode === 32 ) {
-    reloadPage();
-    let fs = fullscreen();
-    fullscreen(!fs);    
+     imageMode(CENTER);
+  logo.resize(40, 0);
+  tint(255, 255, 255);
+  image(logo, xLogo, windowHeight-20);
+  
+  imageMode(CORNER);
+  save();
   }
 }
 

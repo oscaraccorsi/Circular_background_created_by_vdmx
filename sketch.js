@@ -1,7 +1,7 @@
-let baseURLSound = 'https://oscaraccorsi.github.io/mp3_files/';
+//let baseURLSound = 'https://oscaraccorsi.github.io/mp3_files/';
 
-const vol = new Tone.Volume(0).toDestination();
-let ruggito;
+//const vol = new Tone.Volume(0).toDestination();
+//let ruggito;
 
 
 let baseURLBack = 'https://oscaraccorsi.github.io/backgrounds/';
@@ -9,9 +9,22 @@ let baseURLImage = 'https://oscaraccorsi.github.io/pictures/';
 let logo;
 let xLogo;
 let img;
+let pictureList = ['01.png', '02.png', 
+                   '03.png', '04.png',
+                   '05.png', '06.png', 
+                   '07.png', '08.png', 
+                   '09.png', '10.png', 
+                   '11.png', '12.png',
+                   '13.png', '14.png',
+                   '15.png', '16.png',
+                   '17.png', '18.png',
+                   '19.png', '20.png',
+                   '21.png', '22.png',
+                   '23.png', '24.png'];
+
+let timeBackGroundArray = [13, 21, 34, 55, 89, 144];
+let timeBackground;
 palette = [];
-
-
 
 let back;
 let backWidth;
@@ -26,28 +39,39 @@ let backX2 = 0;
 
 let from, to;
 let amount;
-let index = 0.005;
+let index = 0.01;
 let inter;
+
+let choiceArray = [colorFade, noColorFade];
+let choice;
+
+
 //-----------------------------------------------PRELOAD
 function preload() {
-  ruggito = new Tone.Player(baseURLSound + "ruggito.mp3").toDestination();
+  //ruggito = new Tone.Player(baseURLSound + "ruggito.mp3").toDestination();
   logo = loadImage(baseURLImage + 'good one white.png');
-  back = loadImage(baseURLBack + '12.png');
-  img = loadImage(baseURLImage + 'schneider10.png');
+  
+  back = loadImage(baseURLBack + random(pictureList));
+  
+  img = loadImage(baseURLImage + 'klee.jpg');
   //back2 = loadImage(baseURLBack + '12.png');
 }
-//------------------------------------------------WINDOWRESEZED
+//------------------------------------------------WINDOWRESIZED
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
 //--------------------------------------------------SETUP
 function setup() {
-  ruggito.loop = true;
-  ruggito.autostart = true;
+  //ruggito.loop = true;
+  //ruggito.autostart = true;
   
   createCanvas(windowWidth, windowHeight);
   
-  img.resize(100, 200);
+  timeBackground = random(timeBackGroundArray);
+  setInterval(reloadPage, 1000*timeBackground);
+  console.log(timeBackground);
+  
+  img.resize(100, 0);
   img.loadPixels();
   
 //-------------------------------------------------palette  
@@ -55,7 +79,7 @@ function setup() {
     let r = img.pixels[i]; 
     let g = img.pixels[i+1]; 
     let b = img.pixels[i+2]; 
-    let c = color(r, g, b, 150);
+    let c = color(r, g, b, 255);
     palette.push(c);    
   }
   
@@ -66,24 +90,34 @@ function setup() {
   backWidth = windowWidth;
   back2Width = windowWidth;
   
+  
 //-----------------------------------------lerp  
   from = random(palette);
   to = random(palette);
   amount = 0;
   inter = lerpColor(from, to, amount);  
+
+  //---------------------------------choice
+  choice = random(choiceArray);
+ 
 }
+
+
 //------------------------------------------DRAW
 function draw() {
-  colorFade();
+  //colorFade();
+  choice();
   toRight();
-  toLeft();  
+  toLeft();
+  //image(img, 0, 0);
+  
 }
 //----------------------------------toLeft
 function toLeft() {
-  tint(255, 255, 255, 75);
+  tint(255, 255, 255, 30);
   image(back, backX1, 0, backWidth, backHeight);
   image(back, backX1 + backWidth, 0, backWidth, backHeight);
-  backX1 -=0.2;
+  backX1 -=1;
   
   if (backX1 < -backWidth) {
     backX1 = 0;  
@@ -91,10 +125,10 @@ function toLeft() {
 }
 //-----------------------------------toRight
 function toRight() {
-  tint(255, 255, 255, 90);
+  tint(255, 255, 255, 45);
   image(back, backX2, 0, backWidth, backHeight);
   image(back, backX2 - backWidth, 0, backWidth, backHeight);
-  backX2 +=0.2;
+  backX2 +=1;
   
   if (backX2 > backWidth) {
     backX2 = 0;  
@@ -117,6 +151,10 @@ function colorFade() {
   }
 }
 
+function noColorFade() {
+  background(10);
+}
+
 //----------------------------------------mousePressed
 function mousePressed() {
   imageMode(CENTER);
@@ -128,4 +166,17 @@ function mousePressed() {
   save();
   
   // clear(); 
+}
+
+//--------------------------------space bar
+function keyPressed() {
+   if (keyCode === 32 ) {
+    reloadPage();
+    let fs = fullscreen();
+    fullscreen(!fs);    
+  }
+}
+
+function reloadPage() {
+   window.location.reload();
 }

@@ -1,8 +1,8 @@
 
-//let baseURLSound = 'https://oscaraccorsi.github.io/mp3_files/';
+let baseURLSound = 'https://oscaraccorsi.github.io/drones/';
 
-//const vol = new Tone.Volume(0).toDestination();
-//let ruggito;
+const vol = new Tone.Volume(0).toDestination();
+let dronePlaying;
 
 
 let baseURLBack = 'https://oscaraccorsi.github.io/backgrounds/';
@@ -11,6 +11,14 @@ let baseUrlPictures = ' https://oscaraccorsi.github.io/tartan/';
 let logo;
 let xLogo;
 let img;
+
+let dronesList = ['Drone01.mp3',
+                  'Drone02.mp3',
+                  'Drone03.mp3',
+                  'Drone04.mp3',
+                  'Drone05.mp3',
+                  'Drone06.mp3'];
+
 let backgroundList = ['01.png', '02.png', 
                       '03.png', '04.png',
                       '05.png', '06.png', 
@@ -65,7 +73,7 @@ let sec, min, h, day;
 
 //-----------------------------------------------PRELOAD
 function preload() {
-  //ruggito = new Tone.Player(baseURLSound + "ruggito.mp3").toDestination();
+  dronePlaying = new Tone.Player(baseURLSound + random(dronesList)).toDestination();
   logo = loadImage(baseURLImage + 'good one white.png');
   
   back = loadImage(baseURLBack + random(backgroundList));
@@ -80,8 +88,8 @@ function windowResized() {
 }
 //--------------------------------------------------SETUP
 function setup() {
-  //ruggito.loop = true;
-  //ruggito.autostart = true;
+  dronePlaying.loop = true;
+  dronePlaying.autostart = true;
   
   createCanvas(windowWidth, windowHeight);
   
@@ -185,13 +193,13 @@ function mousePressed() {
 //--------------------------------space bar
 function keyPressed() {
    if (keyCode === 32 ) {
-     imageMode(CENTER);
+    imageMode(CENTER);
   logo.resize(40, 0);
   tint(255, 255, 255);
   image(logo, xLogo, windowHeight-20);
   
   imageMode(CORNER);
-  save();
+  save();  
   }
 }
 

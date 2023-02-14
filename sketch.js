@@ -17,7 +17,8 @@ let dronesList = ['Drone01.mp3',
                   'Drone03.mp3',
                   'Drone04.mp3',
                   'Drone05.mp3',
-                  'Drone06.mp3'];
+                  'Drone06.mp3',
+                  'Drone07'];
 
 let backgroundList = ['01.png', '02.png', 
                       '03.png', '04.png',
